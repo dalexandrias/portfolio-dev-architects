@@ -228,14 +228,7 @@ const FooterNew = () => {
           </div>
         </div>
 
-        {/* Back to Top Button */}
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="absolute bottom-6 right-6 w-12 h-12 bg-primary-600 rounded-full flex items-center justify-center text-white hover:bg-primary-700 transition-all duration-300 transform hover:scale-110 shadow-lg"
-          title="Voltar ao topo"
-        >
-          ↑
-        </button>
+
       </Container>
     </footer>
   );
