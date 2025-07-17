@@ -43,7 +43,7 @@ const HeroAdvanced = () => {
   ];
 
   return (
-    <Section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-50 via-white to-primary-50">
+    <Section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-50 via-white to-primary-50 pt-1 md:pt-2 lg:pt-3">
       {/* Floating Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {floatingElements.map((element) => (
