@@ -83,115 +83,6 @@ const Team = () => {
   return (
     <Section id="equipe" variant="default">
       <Container>
-        <div className="text-center mb-16" ref={elementRef}>
-          <h2 className={`section-title ${hasIntersected ? 'animate-fade-in-smooth is-visible' : 'animate-fade-in-smooth'}`}>
-            Nossa Equipe
-          </h2>
-          <p className={`section-subtitle ${hasIntersected ? 'animate-fade-in-smooth is-visible delay-200' : 'animate-fade-in-smooth'}`}>
-            Conheça os profissionais apaixonados por tecnologia que tornam nossos projetos realidade
-          </p>
-        </div>
-
-        {/* Team Members */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-20">
-          {teamMembers.map((member, index) => (
-            <Card 
-              key={member.id}
-              variant="hover"
-              className={`group overflow-hidden relative ${hasIntersected ? 'animate-scale-in-smooth is-visible' : 'animate-scale-in-smooth'}`}
-              style={{ animationDelay: `${300 + index * 150}ms` }}
-              onMouseEnter={() => setHoveredMember(member.id)}
-              onMouseLeave={() => setHoveredMember(null)}
-            >
-              {/* Profile Image */}
-              <div className="relative mb-6">
-                <div className="w-32 h-32 mx-auto rounded-full bg-gradient-brand p-1 group-hover:scale-105 transition-transform duration-300">
-                  <div className="w-full h-full rounded-full bg-gray-200 flex items-center justify-center text-4xl text-gray-600 overflow-hidden">
-                    👨‍💻
-                  </div>
-                </div>
-                {hoveredMember === member.id && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full animate-fade-in-smooth is-visible">
-                    <div className="flex space-x-3">
-                      <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-colors duration-200">
-                        📧
-                      </button>
-                      <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-colors duration-200">
-                        💼
-                      </button>
-                      <button className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary-600 hover:bg-primary-50 transition-colors duration-200">
-                        🔗
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Member Info */}
-              <div className="text-center mb-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-1 group-hover:text-primary-600 transition-colors duration-300">
-                  {member.name}
-                </h3>
-                <p className="text-primary-600 font-medium mb-2">{member.role}</p>
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                  {member.description}
-                </p>
-              </div>
-
-              {/* Expertise Tags */}
-              <div className="mb-6">
-                <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-3">
-                  Especialidades
-                </h4>
-                <div className="flex flex-wrap gap-2 justify-center">
-                  {member.expertise.map((skill, skillIndex) => (
-                    <span
-                      key={skillIndex}
-                      className="px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-medium border border-primary-200"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Achievements */}
-              <div className="mb-6">
-                <h4 className="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-3">
-                  Conquistas
-                </h4>
-                <ul className="space-y-1">
-                  {member.achievements.map((achievement, achIndex) => (
-                    <li key={achIndex} className="flex items-center text-sm text-gray-600">
-                      <span className="w-1.5 h-1.5 bg-primary-500 rounded-full mr-2 flex-shrink-0"></span>
-                      {achievement}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Quote */}
-              <div className="pt-4 border-t border-gray-100">
-                <div className="text-2xl text-primary-300 mb-2">"</div>
-                <p className="text-sm text-gray-600 italic leading-relaxed mb-2">
-                  {member.quote}
-                </p>
-                <div className="text-xs text-primary-600 font-medium">
-                  Stack favorito: {member.favoriteStack}
-                </div>
-              </div>
-
-              {/* Contact Button */}
-              <div className="mt-6">
-                <Button variant="ghost" size="sm" className="w-full justify-center group-hover:bg-primary-50">
-                  Entrar em Contato
-                  <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
-                </Button>
-              </div>
-            </Card>
-          ))}
-        </div>
-
         {/* Company Values */}
         <div className={`mb-16 ${hasIntersected ? 'animate-fade-in-smooth is-visible delay-700' : 'animate-fade-in-smooth'}`}>
           <div className="text-center mb-12">
@@ -225,7 +116,7 @@ const Team = () => {
         </div>
 
         {/* Join Team CTA */}
-        <div className={`text-center ${hasIntersected ? 'animate-fade-in-smooth is-visible delay-1000' : 'animate-fade-in-smooth'}`}>
+        {/* <div className={`text-center ${hasIntersected ? 'animate-fade-in-smooth is-visible delay-1000' : 'animate-fade-in-smooth'}`}>
           <Card className="bg-gradient-to-br from-primary-600 to-primary-700 text-white p-8 lg:p-12">
             <div className="max-w-3xl mx-auto">
               <div className="text-4xl mb-6">🌟</div>
@@ -247,7 +138,7 @@ const Team = () => {
               </div>
             </div>
           </Card>
-        </div>
+        </div> */}
       </Container>
     </Section>
   );

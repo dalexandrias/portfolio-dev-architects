@@ -47,6 +47,18 @@
     @apply mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
   }
   
+  /* Utilities */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .bg-gradient-text {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
   /* Seções */
   .section {
     @apply py-16 md:py-20 lg:py-24;
@@ -57,7 +69,7 @@
   }
   
   .section-dark {
-    @apply bg-gradient-brand text-white;
+    @apply bg-gradient-to-r from-primary-600 to-primary-800 text-white;
   }
   
   /* Títulos de seção */
@@ -128,7 +140,7 @@
 @layer utilities {
   /* Gradiente de texto */
   .text-gradient {
-    @apply bg-gradient-brand bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent;
   }
   
   /* Animações de entrada melhoradas */

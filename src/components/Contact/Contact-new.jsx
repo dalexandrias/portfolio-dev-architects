@@ -64,12 +64,6 @@ const Contact = () => {
       icon: '📧',
       title: 'E-mail',
       description: 'Envie um e-mail detalhado sobre seu projeto'
-    },
-    {
-      id: 'call',
-      icon: '📞',
-      title: 'Ligação',
-      description: 'Agende uma conversa para discutir seu projeto'
     }
   ];
 
@@ -94,9 +88,9 @@ const Contact = () => {
     },
     {
       icon: '⏰',
-      title: 'Horário',
-      info: 'Segunda a Sexta',
-      detail: '9:00 às 18:00'
+      title: 'Atendimento',
+      info: 'Com Agendamento',
+      detail: 'Horários flexíveis'
     }
   ];
 
@@ -435,7 +429,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="font-semibold text-gray-800">Fazem manutenção?</div>
-                  <div className="text-gray-600">Sim, oferecemos pacotes de manutenção e suporte.</div>
+                  <div className="text-gray-600">Sim, oferecemos manutenção e suporte.</div>
                 </div>
                 <div>
                   <div className="font-semibold text-gray-800">Trabalham remotamente?</div>

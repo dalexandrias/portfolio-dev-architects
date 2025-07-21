@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Header from './components/Header/Header-new';
 import Hero from './components/Hero/Hero-advanced';
 import About from './components/About/About-advanced';
@@ -9,6 +9,8 @@ import Contact from './components/Contact/Contact-new';
 import Footer from './components/Footer/FooterNew2';
 import AdvancedLoader from './components/ui/AdvancedLoader';
 import ScrollIndicator from './components/ui/ScrollIndicator';
+import Projects from './components/Projects/Projects';
+import { Routes, Route } from 'react-router-dom';
 import './styles/tailwind.css';
 
 function App() {
@@ -31,12 +33,19 @@ function App() {
       <div className="relative z-10">
         <Header />
         <main>
-          <Hero />
-          <About />
-          <Services />
-          <Technologies />
-          <Team />
-          <Contact />
+          <Routes>
+            <Route path="/" element={
+              <>
+                <Hero />
+                <About />
+                <Services />
+                <Technologies />
+                <Team />
+                <Contact />
+              </>
+            } />
+            <Route path="/projects" element={<Projects />} />
+          </Routes>
         </main>
         <Footer />
       </div>
