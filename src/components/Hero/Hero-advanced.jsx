@@ -4,7 +4,10 @@ import { useIntersectionObserver, useCountUp, useParallax } from '../../hooks';
 import { Container, Section, Button } from '../ui';
 
 const HeroAdvanced = () => {
-  const { elementRef, hasIntersected } = useIntersectionObserver();
+  const { elementRef, hasIntersected } = useIntersectionObserver({
+    threshold: 0.1,
+    rootMargin: '0px 0px 0px 0px' // Remove negative margin for immediate visibility
+  });
   const { count: projectCount, startAnimation: startProjectCount } = useCountUp(50, 2000);
   const { count: clientCount, startAnimation: startClientCount } = useCountUp(100, 2500);
   const { count: yearCount, startAnimation: startYearCount } = useCountUp(5, 1500);
@@ -72,7 +75,7 @@ const HeroAdvanced = () => {
       </div>
 
       <Container className="relative z-10">
-        <div className="flex flex-col lg:flex-row items-center min-h-screen py-20">
+        <div className="flex flex-col lg:flex-row items-center min-h-screen py-20 relative">
           {/* Left Content */}
           <div className="flex-1 text-center lg:text-left mb-12 lg:mb-0" ref={elementRef}>
             {/* Animated Badge */}
@@ -221,11 +224,13 @@ const HeroAdvanced = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 ${hasIntersected ? 'animate-bounce-gentle' : 'opacity-0'}`} style={{ animationDelay: '3s' }}>
-          <div className="flex flex-col items-center text-primary-600 animate-pulse">
-            <span className="text-sm mb-2">Role para baixo</span>
-            <div className="w-6 h-10 border-2 border-primary-400 rounded-full flex justify-center">
-              <div className="w-1 h-2 bg-primary-500 rounded-full mt-2 animate-bounce"></div>
+        <div className="w-full flex justify-center">
+          <div className={`${hasIntersected ? 'animate-bounce-gentle' : 'opacity-0'}`} style={{ animationDelay: '3s' }}>
+            <div className="flex flex-col items-center text-primary-600 animate-pulse">
+              <span className="text-xs sm:text-sm mb-2 text-center whitespace-nowrap">Role para baixo</span>
+              <div className="w-6 h-10 border-2 border-primary-400 rounded-full flex justify-center">
+                <div className="w-1 h-2 bg-primary-500 rounded-full mt-2 animate-bounce"></div>
+              </div>
             </div>
           </div>
         </div>

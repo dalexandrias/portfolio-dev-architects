@@ -38,7 +38,7 @@ const ScrollIndicator = () => {
       {/* Scroll to Top Button */}
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-8 right-8 w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-50 flex items-center justify-center group ${
+        className={`fixed bottom-8 right-8 w-14 h-14 bg-primary-600 hover:bg-primary-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 z-[60] flex items-center justify-center group ${
           isVisible ? 'translate-y-0 opacity-100' : 'translate-y-16 opacity-0'
         }`}
         aria-label="Voltar ao topo"
@@ -77,7 +77,7 @@ const ScrollIndicator = () => {
       </button>
 
       {/* Scroll Percentage */}
-      <div className={`fixed bottom-28 right-8 bg-black/80 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm transition-all duration-300 ${
+      <div className={`fixed bottom-28 right-8 bg-black/90 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm transition-all duration-300 z-[60] shadow-lg ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
       }`}>
         {Math.round(scrollProgress)}%

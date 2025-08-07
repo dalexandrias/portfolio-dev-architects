@@ -3,7 +3,10 @@ import { useIntersectionObserver, useStaggerAnimation, useCountUp, useHover } fr
 import { Container, Section, Card } from '../ui';
 
 const AboutAdvanced = () => {
-  const { elementRef, hasIntersected } = useIntersectionObserver();
+  const { elementRef, hasIntersected } = useIntersectionObserver({
+    threshold: 0.1,
+    rootMargin: '0px 0px 0px 0px'
+  });
   const { addToRefs } = useStaggerAnimation(150);
   
   // Count up animations for stats

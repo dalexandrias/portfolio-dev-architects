@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from './components/Header/Header-new';
 import Hero from './components/Hero/Hero-advanced';
 import About from './components/About/About-advanced';
@@ -12,6 +14,20 @@ import { Routes, Route } from 'react-router-dom';
 import './styles/tailwind.css';
 
 function App() {
+  const location = useLocation();
+
+  // Reset scroll position when navigating back to home
+  useEffect(() => {
+    if (location.pathname === '/') {
+      // Immediate scroll to top
+      window.scrollTo(0, 0);
+      // Additional smooth scroll after a delay to ensure proper rendering
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 150);
+    }
+  }, [location.pathname]);
+
   return (
     <div className="min-h-screen bg-white fade-in-initial relative">
       {/* Scroll Indicator */}

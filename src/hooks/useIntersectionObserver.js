@@ -9,6 +9,15 @@ export const useIntersectionObserver = (options = {}) => {
     const element = elementRef.current;
     if (!element) return;
 
+    // Check if element is already visible when observer is created
+    const rect = element.getBoundingClientRect();
+    const isAlreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    
+    if (isAlreadyVisible && !hasIntersected) {
+      setHasIntersected(true);
+      setIsIntersecting(true);
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsIntersecting(entry.isIntersecting);

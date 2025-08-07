@@ -15,7 +15,6 @@ const Header = () => {
     { href: '#sobre', label: 'Sobre' },
     { href: '#servicos', label: 'Serviços' },
     { href: '#tecnologias', label: 'Tecnologias' },
-    { href: '#equipe', label: 'Equipe' },
     { href: '/projects', label: 'Projetos', isRoute: true },
     { href: '#contato', label: 'Contato' }
   ];

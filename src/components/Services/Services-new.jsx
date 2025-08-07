@@ -2,7 +2,10 @@ import { useIntersectionObserver } from '../../hooks';
 import { Container, Section, Card, Button } from '../ui';
 
 const Services = () => {
-  const { elementRef, hasIntersected } = useIntersectionObserver();
+  const { elementRef, hasIntersected } = useIntersectionObserver({
+    threshold: 0.1,
+    rootMargin: '0px 0px 0px 0px'
+  });
 
   const services = [
     {
