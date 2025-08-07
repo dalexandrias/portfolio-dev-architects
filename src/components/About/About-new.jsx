@@ -122,27 +122,6 @@ const About = () => {
               Os princípios que guiam nosso trabalho e definem como entregamos excelência em cada projeto
             </p>
           </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value, index) => (
-              <Card 
-                key={index}
-                variant="hover"
-                className={`text-center group ${hasIntersected ? 'animate-slide-up-smooth is-visible' : 'animate-slide-up-smooth'}`}
-                style={{ animationDelay: `${800 + index * 100}ms` }}
-              >
-                <div className="text-4xl mb-4 group-hover:animate-bounce-gentle">
-                  {value.icon}
-                </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-3">
-                  {value.title}
-                </h4>
-                <p className="text-gray-600 leading-relaxed">
-                  {value.description}
-                </p>
-              </Card>
-            ))}
-          </div>
         </div>
       </Container>
     </Section>

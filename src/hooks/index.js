@@ -5,7 +5,6 @@ export {
   useStaggerAnimation, 
   useParallax, 
   useCountUp, 
-  useTypewriter, 
   useHover, 
   useMousePosition, 
   useAnimationSequence 

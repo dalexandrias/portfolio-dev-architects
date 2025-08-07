@@ -13,6 +13,7 @@ const Section = forwardRef(({
     default: '',
     light: 'section-light',
     dark: 'section-dark',
+    muted: 'section-muted',
   };
   
   return (

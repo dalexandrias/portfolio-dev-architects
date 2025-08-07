@@ -73,7 +73,7 @@ const Technologies = () => {
   return (
     <Section id="tecnologias" variant="muted">
       <Container>
-        <div className="text-center mb-16" ref={elementRef}>
+        <div className="text-center mb-12" ref={elementRef}>
           <h2 className={`section-title ${hasIntersected ? 'animate-fade-in-smooth is-visible' : 'animate-fade-in-smooth'}`}>
             Tecnologias & Expertise
           </h2>

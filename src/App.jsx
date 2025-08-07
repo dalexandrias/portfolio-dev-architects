@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Header from './components/Header/Header-new';
 import Hero from './components/Hero/Hero-advanced';
 import About from './components/About/About-advanced';
@@ -7,23 +6,12 @@ import Technologies from './components/Technologies/Technologies-new';
 import Team from './components/Team/Team-new';
 import Contact from './components/Contact/Contact-new';
 import Footer from './components/Footer/FooterNew2';
-import AdvancedLoader from './components/ui/AdvancedLoader';
 import ScrollIndicator from './components/ui/ScrollIndicator';
 import Projects from './components/Projects/Projects';
 import { Routes, Route } from 'react-router-dom';
 import './styles/tailwind.css';
 
 function App() {
-  const [loading, setLoading] = useState(true);
-
-  const handleLoadingComplete = () => {
-    setLoading(false);
-  };
-
-  if (loading) {
-    return <AdvancedLoader onComplete={handleLoadingComplete} />;
-  }
-
   return (
     <div className="min-h-screen bg-white fade-in-initial relative">
       {/* Scroll Indicator */}
@@ -40,7 +28,7 @@ function App() {
                 <About />
                 <Services />
                 <Technologies />
-                <Team />
+                {/* <Team /> */}
                 <Contact />
               </>
             } />

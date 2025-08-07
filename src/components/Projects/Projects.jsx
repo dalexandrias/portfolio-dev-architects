@@ -83,12 +83,22 @@ const projects = [
 
 const Projects = () => {
   const [activeFilter, setActiveFilter] = useState('all');
-  const { elementRef, hasIntersected } = useIntersectionObserver();
+  const { elementRef, hasIntersected } = useIntersectionObserver({
+    threshold: 0.1,
+    rootMargin: '0px 0px 0px 0px' // Remove a margem negativa para mostrar imediatamente
+  });
   const { triggerStagger } = useStaggerAnimation();
+  const [isVisible, setIsVisible] = useState(false);
 
-  // Scroll para o topo quando o componente montar
+  // Scroll para o topo quando o componente montar e forçar visibilidade
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Forçar visibilidade após um pequeno delay para permitir animações
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100); // Reduzido para 100ms para aparecer mais rápido
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const filteredProjects = activeFilter === 'all' 
@@ -155,8 +165,8 @@ const Projects = () => {
           {/* Projects Grid */}
           <div 
             ref={elementRef}
-            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 ${
-              hasIntersected ? 'animate-fade-in-up-stagger' : 'opacity-0'
+            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-500 ${
+              hasIntersected || isVisible ? 'animate-fade-in-up-stagger opacity-100' : 'opacity-0'
             }`}
           >
             {filteredProjects.map((project, index) => (

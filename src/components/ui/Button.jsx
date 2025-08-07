@@ -5,9 +5,12 @@ const Button = forwardRef(({
   className, 
   variant = 'primary', 
   size = 'default', 
+  as,
   children, 
   ...props 
 }, ref) => {
+  const Component = as || 'button';
+  
   const baseClasses = 'btn';
   
   const variants = {
@@ -23,7 +26,7 @@ const Button = forwardRef(({
   };
   
   return (
-    <button
+    <Component
       className={cn(
         baseClasses,
         variants[variant],
@@ -34,7 +37,7 @@ const Button = forwardRef(({
       {...props}
     >
       {children}
-    </button>
+    </Component>
   );
 });
 

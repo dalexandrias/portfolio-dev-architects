@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useIntersectionObserver, useTypewriter, useCountUp, useParallax } from '../../hooks';
+import { Link } from 'react-router-dom';
+import { useIntersectionObserver, useCountUp, useParallax } from '../../hooks';
 import { Container, Section, Button } from '../ui';
 
 const HeroAdvanced = () => {
   const { elementRef, hasIntersected } = useIntersectionObserver();
-  const { displayText: typedText, startTyping } = useTypewriter('Código que Arquiteta o Futuro', 80, 1000, true, 1000);
   const { count: projectCount, startAnimation: startProjectCount } = useCountUp(50, 2000);
   const { count: clientCount, startAnimation: startClientCount } = useCountUp(100, 2500);
   const { count: yearCount, startAnimation: startYearCount } = useCountUp(5, 1500);
@@ -14,12 +14,11 @@ const HeroAdvanced = () => {
 
   useEffect(() => {
     if (hasIntersected) {
-      startTyping();
       setTimeout(() => startProjectCount(), 1500);
       setTimeout(() => startClientCount(), 1800);
       setTimeout(() => startYearCount(), 2100);
     }
-  }, [hasIntersected, startTyping, startProjectCount, startClientCount, startYearCount]);
+  }, [hasIntersected, startProjectCount, startClientCount, startYearCount]);
 
   useEffect(() => {
     // Criar elementos flutuantes
@@ -92,11 +91,6 @@ const HeroAdvanced = () => {
               </span>
             </h1>
 
-            {/* Typewriter Subtitle */}
-            <div className="text-xl lg:text-2xl text-primary-600 font-medium mb-8 h-8">
-              <span className="animate-typing">{typedText}</span>
-            </div>
-
             {/* Animated Description */}
             <p className={`text-lg text-gray-600 leading-relaxed mb-8 max-w-2xl ${hasIntersected ? 'animate-fade-in-up-stagger' : 'opacity-0'}`} style={{ animationDelay: '1s' }}>
               Transformamos ideias em soluções digitais inovadoras. Especializados em desenvolvimento web, 
@@ -136,6 +130,8 @@ const HeroAdvanced = () => {
                 <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
               </Button>
               <Button 
+                as={Link}
+                to="/projects"
                 variant="secondary" 
                 size="lg"
                 className="micro-bounce hover-glow-pulse"

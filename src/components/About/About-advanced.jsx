@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useIntersectionObserver, useStaggerAnimation, useCountUp, useHover } from '../../hooks';
 import { Container, Section, Card } from '../ui';
 
@@ -17,18 +17,18 @@ const AboutAdvanced = () => {
   const { ref: visionRef, isHovered: isVisionHovered } = useHover();
   const { ref: valuesRef, isHovered: isValuesHovered } = useHover();
 
-  const startAllCounters = () => {
+  const startAllCounters = useCallback(() => {
     setTimeout(() => startProjects(), 200);
     setTimeout(() => startClients(), 400);
     setTimeout(() => startSatisfaction(), 600);
     setTimeout(() => startTeam(), 800);
-  };
+  }, [startProjects, startClients, startSatisfaction, startTeam]);
 
   useEffect(() => {
     if (hasIntersected) {
       startAllCounters();
     }
-  }, [hasIntersected]);
+  }, [hasIntersected, startAllCounters]);
 
   const companyInfo = [
     {
@@ -271,7 +271,7 @@ const AboutAdvanced = () => {
         </div>
 
         {/* CTA Section */}
-        <div className={`text-center mt-20 ${hasIntersected ? 'animate-zoom-in' : 'opacity-0'}`} style={{ animationDelay: '2s' }}>
+        <div className={`text-center mt-12 ${hasIntersected ? 'animate-zoom-in' : 'opacity-0'}`} style={{ animationDelay: '2s' }}>
           <Card className="bg-gradient-to-r from-primary-600 to-primary-700 text-white p-8 lg:p-12 hover-glow-pulse">
             <div className="max-w-3xl mx-auto">
               <div className="text-4xl mb-6 animate-heart-beat">💫</div>

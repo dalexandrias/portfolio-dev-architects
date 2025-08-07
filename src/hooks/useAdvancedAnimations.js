@@ -97,60 +97,6 @@ export const useCountUp = (end, duration = 2000, start = 0) => {
   return { count, startAnimation, resetAnimation, isActive };
 };
 
-export const useTypewriter = (text, speed = 100, delay = 0, repeat = false, pauseDuration = 2000) => {
-  const [displayText, setDisplayText] = useState('');
-  const [isComplete, setIsComplete] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    if (!isActive) return;
-
-    const startTyping = () => {
-      let i = 0;
-      const timer = setInterval(() => {
-        if (i < text.length) {
-          setDisplayText(text.slice(0, i + 1));
-          i++;
-        } else {
-          clearInterval(timer);
-          setIsComplete(true);
-          
-          // Se repeat estiver ativo, reinicia após pauseDuration
-          if (repeat) {
-            setTimeout(() => {
-              setDisplayText('');
-              setIsComplete(false);
-              setTimeout(() => startTyping(), 500); // Pequena pausa antes de reiniciar
-            }, pauseDuration);
-          }
-        }
-      }, speed);
-      
-      return () => clearInterval(timer);
-    };
-
-    const timeout = setTimeout(() => {
-      startTyping();
-    }, delay);
-
-    return () => clearTimeout(timeout);
-  }, [text, speed, delay, isActive, repeat, pauseDuration]);
-
-  const startTyping = () => {
-    setIsActive(true);
-    setDisplayText('');
-    setIsComplete(false);
-  };
-
-  const resetTyping = () => {
-    setIsActive(false);
-    setDisplayText('');
-    setIsComplete(false);
-  };
-
-  return { displayText, isComplete, startTyping, resetTyping };
-};
-
 export const useHover = () => {
   const [isHovered, setIsHovered] = useState(false);
   const ref = useRef(null);

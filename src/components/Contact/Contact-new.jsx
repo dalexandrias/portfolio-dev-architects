@@ -58,13 +58,13 @@ const Contact = () => {
       icon: '💬',
       title: 'WhatsApp',
       description: 'Converse conosco diretamente pelo WhatsApp'
-    },
-    {
-      id: 'email',
-      icon: '📧',
-      title: 'E-mail',
-      description: 'Envie um e-mail detalhado sobre seu projeto'
     }
+    // {
+    //   id: 'email',
+    //   icon: '📧',
+    //   title: 'E-mail',
+    //   description: 'Envie um e-mail detalhado sobre seu projeto'
+    // }
   ];
 
   const contactInfo = [

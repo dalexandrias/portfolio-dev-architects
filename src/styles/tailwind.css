@@ -61,11 +61,15 @@
 
   /* Seções */
   .section {
-    @apply py-16 md:py-20 lg:py-24;
+    @apply py-12 md:py-16 lg:py-20;
   }
   
   .section-light {
     @apply bg-gradient-to-br from-off-white to-light-gray;
+  }
+  
+  .section-muted {
+    @apply bg-gray-50;
   }
   
   .section-dark {
