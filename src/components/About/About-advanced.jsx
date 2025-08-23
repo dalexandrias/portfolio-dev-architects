@@ -285,11 +285,7 @@ const AboutAdvanced = () => {
                 Cada projeto é uma oportunidade de criar algo extraordinário. 
                 Venha fazer parte da nossa jornada de inovação.
               </p>
-              <button className="bg-white text-primary-700 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg micro-bounce hover-lift group">
-                <span className="mr-2 group-hover:animate-wiggle">🚀</span>
-                Iniciar Conversa
-                <span className="ml-2 group-hover:translate-x-1 transition-transform duration-300">→</span>
-              </button>
+              
             </div>
           </Card>
         </div>

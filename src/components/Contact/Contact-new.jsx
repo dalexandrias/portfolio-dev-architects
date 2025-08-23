@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { useIntersectionObserver } from '../../hooks';
 import { Container, Section, Card, Button } from '../ui';
+import { emailjsConfig } from '../../config/emailjs';
 
 const Contact = () => {
   const { elementRef, hasIntersected } = useIntersectionObserver();
@@ -17,6 +19,20 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activeMethod, setActiveMethod] = useState('form');
 
+  // Function ZAP cuidado com o handle se mexer quebra a function
+  const generateWhatsAppLink = () => {
+    const phoneNumber = '5511984343853'; 
+    const message = `Olá! Vim através do site da DevArchitects e gostaria de conversar sobre um projeto de desenvolvimento. Podem me ajudar?`;
+
+    const encodedMessage = encodeURIComponent(message);
+    return `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+  };
+
+  const handleWhatsAppClick = () => {
+    const whatsappUrl = generateWhatsAppLink();
+    window.open(whatsappUrl, '_blank');
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -29,20 +45,107 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simular envio
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    try {
+      // Preparar dados para o EmailJS
+      const templateParams = {
+        to_email: emailjsConfig.toEmail,
+        from_name: formData.name,
+        from_email: formData.email,
+        company: formData.company || 'Não informado',
+        phone: formData.phone || 'Não informado',
+        project_type: formData.project,
+        budget: formData.budget || 'Não informado',
+        timeline: formData.timeline || 'Não definido',
+        message: formData.message,
+        submit_date: new Date().toLocaleString('pt-BR')
+      };
+
+     
+      try {
+        const result = await emailjs.send(
+          emailjsConfig.serviceId, 
+          emailjsConfig.templateId, 
+          templateParams, 
+          emailjsConfig.publicKey
+        );
+        console.log('Email enviado com sucesso:', result);
+        alert('Proposta enviada com sucesso! Entraremos em contato em breve.');
+      } catch (emailjsError) {
+        console.error('Erro no EmailJS:', emailjsError);
+        console.log('Configuração do EmailJS não encontrada ou inválida. Usando fallback mailto...');
+        
+        
+        const emailData = {
+          to: emailjsConfig.toEmail,
+          subject: `Nova Proposta de Projeto - ${formData.name}`,
+          body: `
+Olá Felipe e Davi,
+
+Você recebeu uma nova solicitação de proposta através do site da DevArchitects:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 INFORMAÇÕES DO CLIENTE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Nome: ${formData.name}
+E-mail: ${formData.email}
+Empresa: ${formData.company || 'Não informado'}
+Telefone/WhatsApp: ${formData.phone || 'Não informado'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 DETALHES DO PROJETO:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Tipo de Projeto: ${formData.project}
+Orçamento Previsto: ${formData.budget || 'Não informado'}
+Prazo Desejado: ${formData.timeline || 'Não definido'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💬 DESCRIÇÃO DO PROJETO:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+${formData.message}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⏰ Data/Hora: ${new Date().toLocaleString('pt-BR')}
+🌐 Origem: Site DevArchitects - Formulário de Contato
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Atenciosamente,
+Sistema DevArchitects
+          `.trim()
+        };
+
+        const subject = encodeURIComponent(emailData.subject);
+        const body = encodeURIComponent(emailData.body);
+        const mailtoUrl = `mailto:${emailData.to}?subject=${subject}&body=${body}`;
+        
+        window.location.href = mailtoUrl;
+        alert('Email preparado! Verifique se seu cliente de email foi aberto para enviar a mensagem.');
+      }
+      
+      // Limpar formulário
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        phone: '',
+        project: '',
+        budget: '',
+        message: '',
+        timeline: ''
+      });
+      
+    } catch (error) {
+      console.error('Erro ao enviar proposta:', error);
+      alert('Erro ao enviar proposta. Tente novamente ou entre em contato diretamente.');
+    }
     
-    alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
-    setFormData({
-      name: '',
-      email: '',
-      company: '',
-      phone: '',
-      project: '',
-      budget: '',
-      message: '',
-      timeline: ''
-    });
     setIsSubmitting(false);
   };
 
@@ -59,12 +162,7 @@ const Contact = () => {
       title: 'WhatsApp',
       description: 'Converse conosco diretamente pelo WhatsApp'
     }
-    // {
-    //   id: 'email',
-    //   icon: '📧',
-    //   title: 'E-mail',
-    //   description: 'Envie um e-mail detalhado sobre seu projeto'
-    // }
+    
   ];
 
   const contactInfo = [
@@ -77,15 +175,10 @@ const Contact = () => {
     {
       icon: '📧',
       title: 'E-mail',
-      info: 'contato@devarchitects.com',
+      info: 'felipe-luvizotto@hotmail.com',
       detail: 'Resposta em até 24h'
     },
-    {
-      icon: '📱',
-      title: 'WhatsApp',
-      info: '+55 (11) 99999-9999',
-      detail: 'Seg-Sex: 9h às 18h'
-    },
+   
     {
       icon: '⏰',
       title: 'Atendimento',
@@ -161,7 +254,7 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="lg:col-span-2">
             {activeMethod === 'form' && (
-              <Card className={`${hasIntersected ? 'animate-scale-in-smooth is-visible delay-400' : 'animate-scale-in-smooth'}`}>
+              <Card className={`border-2 border-gray-200 hover:border-primary-200 shadow-lg hover:shadow-xl transition-all duration-300 ${hasIntersected ? 'animate-scale-in-smooth is-visible delay-400' : 'animate-scale-in-smooth'}`}>
                 <div className="mb-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-2">
                     Conte-nos sobre seu projeto
@@ -184,7 +277,7 @@ const Contact = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className="input"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all duration-300 hover:border-gray-300"
                         placeholder="Seu nome completo"
                       />
                     </div>
@@ -198,7 +291,7 @@ const Contact = () => {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="input"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all duration-300 hover:border-gray-300"
                         placeholder="seu@email.com"
                       />
                     </div>
@@ -214,7 +307,7 @@ const Contact = () => {
                         name="company"
                         value={formData.company}
                         onChange={handleInputChange}
-                        className="input"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all duration-300 hover:border-gray-300"
                         placeholder="Nome da sua empresa"
                       />
                     </div>
@@ -227,7 +320,7 @@ const Contact = () => {
                         name="phone"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className="input"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all duration-300 hover:border-gray-300"
                         placeholder="(11) 99999-9999"
                       />
                     </div>
@@ -244,7 +337,7 @@ const Contact = () => {
                         value={formData.project}
                         onChange={handleInputChange}
                         required
-                        className="input"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all duration-300 hover:border-gray-300 bg-white dark:bg-gray-800"
                       >
                         <option value="">Selecione o tipo</option>
                         {projectTypes.map((type, index) => (
@@ -260,7 +353,7 @@ const Contact = () => {
                         name="budget"
                         value={formData.budget}
                         onChange={handleInputChange}
-                        className="input"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all duration-300 hover:border-gray-300 bg-white dark:bg-gray-800"
                       >
                         <option value="">Selecione a faixa</option>
                         {budgetRanges.map((range, index) => (
@@ -278,7 +371,7 @@ const Contact = () => {
                       name="timeline"
                       value={formData.timeline}
                       onChange={handleInputChange}
-                      className="input"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all duration-300 hover:border-gray-300 bg-white dark:bg-gray-800"
                     >
                       <option value="">Selecione o prazo</option>
                       {timelines.map((timeline, index) => (
@@ -297,7 +390,7 @@ const Contact = () => {
                       onChange={handleInputChange}
                       required
                       rows={6}
-                      className="textarea"
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary-500 focus:ring-2 focus:ring-primary-200 outline-none transition-all duration-300 hover:border-gray-300 resize-vertical"
                       placeholder="Conte-nos sobre seu projeto, objetivos, funcionalidades desejadas e qualquer informação relevante..."
                     />
                   </div>
@@ -326,7 +419,7 @@ const Contact = () => {
 
             {/* Other Contact Methods */}
             {activeMethod !== 'form' && (
-              <Card className={`text-center p-12 ${hasIntersected ? 'animate-scale-in-smooth is-visible delay-400' : 'animate-scale-in-smooth'}`}>
+              <Card className={`text-center p-12 border-2 border-gray-200 hover:border-primary-200 shadow-lg hover:shadow-xl transition-all duration-300 ${hasIntersected ? 'animate-scale-in-smooth is-visible delay-400' : 'animate-scale-in-smooth'}`}>
                 <div className="text-6xl mb-6">
                   {contactMethods.find(m => m.id === activeMethod)?.icon}
                 </div>
@@ -338,7 +431,11 @@ const Contact = () => {
                 </p>
                 
                 {activeMethod === 'whatsapp' && (
-                  <Button size="lg" className="bg-green-600 hover:bg-green-700">
+                  <Button 
+                    size="lg" 
+                    className="bg-green-600 hover:bg-green-700"
+                    onClick={handleWhatsAppClick}
+                  >
                     <span className="mr-2">💬</span>
                     Abrir WhatsApp
                   </Button>
@@ -364,7 +461,7 @@ const Contact = () => {
           {/* Contact Info & Map */}
           <div className="space-y-6">
             {/* Contact Information */}
-            <Card className={`${hasIntersected ? 'animate-slide-left-smooth is-visible delay-500' : 'animate-slide-left-smooth'}`}>
+            <Card className={`border-2 border-gray-200 hover:border-primary-200 shadow-lg hover:shadow-xl transition-all duration-300 ${hasIntersected ? 'animate-slide-left-smooth is-visible delay-500' : 'animate-slide-left-smooth'}`}>
               <h3 className="text-xl font-bold text-gray-900 mb-6">
                 Informações de Contato
               </h3>
@@ -385,7 +482,7 @@ const Contact = () => {
             </Card>
 
             {/* Quick Stats */}
-            <Card className={`bg-gradient-brand text-white ${hasIntersected ? 'animate-slide-left-smooth is-visible delay-600' : 'animate-slide-left-smooth'}`}>
+            <Card className={`bg-gradient-brand text-white border-2 border-primary-300 shadow-lg hover:shadow-xl transition-all duration-300 ${hasIntersected ? 'animate-slide-left-smooth is-visible delay-600' : 'animate-slide-left-smooth'}`}>
               <h3 className="text-xl font-bold mb-6">Por que escolher a DevArchitects?</h3>
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">

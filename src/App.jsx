@@ -29,7 +29,7 @@ function App() {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen bg-white fade-in-initial relative">
+    <div className="min-h-screen bg-white dark:bg-gray-900 fade-in-initial relative transition-colors duration-300">
       {/* Scroll Indicator */}
       <ScrollIndicator />
       

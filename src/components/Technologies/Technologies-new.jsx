@@ -179,7 +179,18 @@ const Technologies = () => {
               <p className="text-primary-100 mb-6">
                 Escolhemos as melhores tecnologias baseadas nos requisitos específicos do seu projeto.
               </p>
-              <button className="bg-white text-primary-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
+              <button 
+                className="bg-white text-primary-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg"
+                onClick={() => {
+                  const contactSection = document.getElementById('contato');
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ 
+                      behavior: 'smooth',
+                      block: 'start'
+                    });
+                  }
+                }}
+              >
                 <span className="mr-2">📞</span>
                 Vamos Conversar
               </button>

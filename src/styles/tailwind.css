@@ -14,15 +14,17 @@
   }
   
   body {
-    @apply font-sans text-gray-900 bg-off-white;
+    @apply font-sans text-gray-900 dark:text-gray-100 bg-off-white dark:bg-gray-900;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
+    transition: color 0.3s ease, background-color 0.3s ease;
   }
   
   #root {
-    @apply min-h-screen bg-off-white;
+    @apply min-h-screen bg-off-white dark:bg-gray-900;
+    transition: background-color 0.3s ease;
   }
   
   /* Melhor foco para acessibilidade */
@@ -585,6 +587,47 @@
   
   .section-subtitle {
     @apply text-base lg:text-lg mb-8;
+  }
+}
+
+/* Video Scroll Effects */
+@layer utilities {
+  .video-zoom-in {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .video-zoom-in:hover {
+    transform: scale(1.05);
+  }
+  
+  .parallax-slow {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .video-overlay-interactive {
+    transition: opacity 0.4s ease-out, backdrop-filter 0.4s ease-out;
+  }
+  
+  .video-content-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  .video-blur-effect {
+    backdrop-filter: blur(1px);
+    transition: backdrop-filter 0.3s ease-out;
+  }
+  
+  .video-blur-effect:hover {
+    backdrop-filter: blur(0px);
   }
 }
 
